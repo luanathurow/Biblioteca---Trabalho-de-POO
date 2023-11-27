@@ -1,19 +1,55 @@
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
 
-public class Biblioteca {
+public class Biblioteca extends Livro {
 
     private Livro[] acervo;
-    private int capacidadeMaxima;
     private int qtdLivro;
+    private Scanner entradaUsuario;
 
-    Biblioteca(int capacidadeMaxima) {
-        this.capacidadeMaxima = capacidadeMaxima;
-        this.acervo = new Livro[capacidadeMaxima]; // Inicializa o array com a capacidade máxima
+    Biblioteca() {
+        this.acervo = new Livro[100]; // Inicializa o array com a capacidade 100
         this.qtdLivro = 0; // A quantidade de lirvros incia com 0
     }
 
+    public void cadastrarLivro() {
+        System.out.println("Digite o título do livro que deseja inserir: ");
+        String tituloLivro = entradaUsuario.nextLine();
+
+        System.out.println("Digite o autor do livro: ");
+        String autorLivro = entradaUsuario.nextLine();
+
+        System.out.println("Digite a categoria do livro: ");
+        String categoriaLivro = entradaUsuario.nextLine();
+
+        System.out.println("Digite o ISBN do livro: ");
+        String isbnLivro = entradaUsuario.nextLine();
+
+        System.out.println("Digite o ano de publicação do livro: ");
+        int anoPublicacaoLivro = entradaUsuario.nextInt();
+        entradaUsuario.nextLine();
+
+        // Criando o objeto Livro
+        Livro livroNovo = new Livro();
+
+        boolean testeLivroNovo = biblioteca.insereLivro(livroNovo);
+        // verificando se retorna null entra no if e apresenta os dados do livro
+        if (testeLivroNovo) {
+            System.out.println("Livro cadastrado em nossa biblioteca com sucesso!");
+            System.out.println("________ Resumo do cadastro __________");
+            System.out.println("Título: " + livroNovo.getTitulo());
+            System.out.println("Autor: " + livroNovo.getAutor());
+            System.out.println("Categoria: " + livroNovo.getGenero());
+            System.out.println("ISBN: " + livroNovo.getIsbn());
+            System.out.println("Ano de Publicacao: " + livroNovo.getAnoPublicacao());
+        } else {
+            System.out.println("Erro. Não foi possivel realizar o cadastro.");
+        }
+    } 
+
     public boolean insereLivro(Livro livro) {
-        if (qtdLivro < capacidadeMaxima) {
+        if (qtdLivro < 100) {
             acervo[qtdLivro] = livro;
             qtdLivro++;
             return true;

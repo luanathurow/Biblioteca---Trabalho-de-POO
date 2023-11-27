@@ -6,20 +6,19 @@ public class BibliotecaApp {
     private Scanner entradaUsuario;
 
     public BibliotecaApp() {
-        biblioteca = new Biblioteca(100);
+        biblioteca = new Biblioteca();
         entradaUsuario = new Scanner(System.in);
     }
 
-    /*public void executa() {
+    public void executa() {
         int op;
         do {
             System.out.println("\n\n\n------ MENU ------");
-            System.out.println("1. Pré-cadastrar livro");
-            System.out.println("2. Cadastrar livro");
-            System.out.println("3. Consultar livro");
-            System.out.println("4. Atualizar autor do livro");
-            System.out.println("5. Remover livro");
-            System.out.println("6. Listar livros");
+            System.out.println("1. Cadastrar livro");
+            System.out.println("2. Consultar livro");
+            System.out.println("3. Atualizar autor do livro");
+            System.out.println("4. Remover livro");
+            System.out.println("5. Listar livros");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opcao: ");
             op = entradaUsuario.nextInt();
@@ -27,23 +26,20 @@ public class BibliotecaApp {
 
             switch (op) {
                 case 1:
-                    preCadastrarLivro();
-                    break;
-                case 2:
                     cadastrarLivro();
                     break;
-                case 3:
+                case 2:
                     consultarLivro();
                     break;
-                case 4:
+                case 3:
                     atualizarAutorLivro();
                     break;
-                case 5:
+                case 4:
                     removerLivro();
                     break;
-                case 6:
+                /*case 5:
                     listarLivros();
-                    break;
+                    break;*/
                 case 0:
                     System.out.println("Fim");
                     break;
@@ -54,7 +50,8 @@ public class BibliotecaApp {
         } while (op != 0);// opcao 0 quebra o while
     }
 
-
+    private void cadastrarLivro() {
+    }
 
     public void consultarLivro() {
         System.out.println("Digite o código ISBN para consultar o livro: ");
@@ -66,14 +63,14 @@ public class BibliotecaApp {
             System.out.println("Livro encontrado na nossa biblioteca:");
             System.out.println("Título: " + livroEncontrado.getTitulo());
             System.out.println("Autor: " + livroEncontrado.getAutor());
-            System.out.println("Categoria: " + livroEncontrado.getCategoria());
-            System.out.println("ISBN: " + livroEncontrado.getISBN());
+            System.out.println("Editora: " + livroEncontrado.getEditora());
+            System.out.println("Genero: " + livroEncontrado.getGenero());
             System.out.println("Ano de Publicação: " + livroEncontrado.getAnoPublicacao());
         } else {
             System.out.println("Livro não encontrado.");
         }
     }
-
+    
     public void atualizarAutorLivro() {
         System.out.println("Digite o código ISBN do livro para alterar o Autor: ");
         String ISBNAlterar = entradaUsuario.nextLine();
@@ -98,23 +95,5 @@ public class BibliotecaApp {
             System.out.println("Erro. Livro não removido ou não encontrado.");
         }
     }
-
-    public void listarLivros() {
-        ArrayList<Livro> listaDeLivros = biblioteca.listaLivros();
-
-        if (listaDeLivros.isEmpty()) {
-            System.out.println("Não há livros na biblioteca.");
-        } else {
-            System.out.println("Lista de livros na biblioteca:");
-            for (Livro livro : listaDeLivros) {
-                System.out.println("Título: " + livro.getTitulo());
-                System.out.println("Autor: " + livro.getAutor());
-                System.out.println("Categoria: " + livro.getCategoria());
-                System.out.println("ISBN: " + livro.getISBN());
-                System.out.println("Ano de Publicação: " + livro.getAnoPublicacao());
-                System.out.println("--------------------------");
-            }
-        }
-    }*/
 
 }
