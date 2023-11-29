@@ -5,56 +5,79 @@ public class BibliotecaApp {
     private Biblioteca biblioteca;
     private Scanner entradaUsuario;
     private CadastroCliente cliente;
+    private RegistroLivro registro;
 
     public BibliotecaApp() {
         biblioteca = new Biblioteca();
         entradaUsuario = new Scanner(System.in);
-        cliente = new CadastroCliente(); 
+        cliente = new CadastroCliente();
     }
 
     public void executa() {
         int op;
         do {
-            try{
-            System.out.println("\n\n\n------ MENU ------");
-            System.out.println("1. Cadastrar Livro");
-            System.out.println("2. Cadastrar Cliente");
-            System.out.println("3. Retirar Livro");
-            System.out.println("4. Devolver Livro");
-            System.out.println("5. Listar Livros");
-            System.out.println("0. Sair");
-            System.out.print("Escolha uma opcao: ");
-            op = entradaUsuario.nextInt();
-            entradaUsuario.nextLine();
+            try {
+                System.out.println("\n\n\n------ MENU ------");
+                System.out.println("1. Cadastrar Livro");
+                System.out.println("2. Cadastrar Cliente");
+                System.out.println("3. Retirar Livro");
+                System.out.println("4. Devolver Livro");
+                System.out.println("5. Listar Livros");
+                System.out.println("0. Sair");
+                System.out.print("Escolha uma opcao: ");
+                op = entradaUsuario.nextInt();
+                entradaUsuario.nextLine();
 
-            switch (op) {
-                case 1:
-                    cadastrarLivro();
-                    break;
-                case 2:
-                    cliente.cadastraCliente();
-                    break; 
-                case 3:
-                //registra a retirada de livros de um cliente. Um cliente pode retirar no máximo 3 livros e o livro deve estar disponível na biblioteca. Essa funcionalidade calcula uma data de entrega.                    
-                    break;
-                case 4:
-                    
-                    break;
-                case 5:
-                    listarLivros(); 
-                    break; 
-                case 0:
-                    System.out.println("Fim");
-                    break;
-                default:
-                    System.out.println("Opcao inválida. Tente novamente.");
-                    break;
+                switch (op) {
+                    case 1:
+                        cadastrarLivro();
+                        break;
+                    case 2:
+                        cliente.cadastraCliente();
+                        break;
+                    case 3:
+                        // registra a retirada de livros de um cliente. Um cliente pode retirar no
+                        // máximo 3 livros e o livro deve estar disponível na biblioteca. Essa
+                        // funcionalidade calcula uma data de entrega.
+
+                        System.out.println("Digite sua matrícula do cliente:");
+                        String matriculaCliente = entradaUsuario.nextLine();
+
+                        Cliente cliente = biblioteca.obterClientePorMatricula(matriculaCliente);
+
+                        if (cliente != null) {
+                            System.out.println("Digite o código do livro que você deseja retirar:");
+                            String codigoLivro = entradaUsuario.nextLine();
+
+                            Livro livro = biblioteca.obterLivroPorCodigo(codigoLivro);
+
+                            if (livro != null) {
+                                RegistroLivro registro = new RegistroLivro(cliente, livro);
+                                registro.registrarRetiradaLivro();
+                            } else {
+                                System.out.println("Livro não encontrado.");
+                            }
+                        } else {
+                            System.out.println("Cliente não encontrado.");
+                        }
+                        break;
+                    case 4:
+                    //implementar
+                    case 5:
+                        listarLivros();
+                        break;
+                    case 0:
+                        System.out.println("Fim");
+                        break;
+                    default:
+                        System.out.println("Opcao inválida. Tente novamente.");
+                        break;
+                }
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
+                entradaUsuario.nextLine();
+                op = -1;
             }
-        } catch (java.util.InputMismatchException e) {
-            System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
-            entradaUsuario.nextLine(); 
-            op = -1;
-        }
         } while (op != 0);
     }
 
@@ -75,7 +98,8 @@ public class BibliotecaApp {
         int anoPublicacaoLivro = entradaUsuario.nextInt();
         entradaUsuario.nextLine();
 
-        boolean testeLivroNovo = biblioteca.insereLivro(tituloLivro, autorLivro, categoriaLivro, isbnLivro, anoPublicacaoLivro);
+        boolean testeLivroNovo = biblioteca.insereLivro(tituloLivro, autorLivro, categoriaLivro, isbnLivro,
+                anoPublicacaoLivro);
 
         if (testeLivroNovo) {
             System.out.println("Livro cadastrado em nossa biblioteca com sucesso!");
@@ -85,27 +109,26 @@ public class BibliotecaApp {
     }
 
     private void listarLivros() {
-    ArrayList<Livro> lista = biblioteca.listarLivros();
-    if (lista.isEmpty()) {
-        System.out.println("\n");
-        System.out.println("Não há livros cadastrados.");
-    } else {
-        System.out.println("\n");
-        System.out.println("Lista de Livros:");
-        System.out.println("\n");
-
-        for (Livro livro : lista) {
-            System.out.println("Título: " + livro.getTitulo());
-            System.out.println("Autor: " + livro.getAutor());
-            System.out.println("Editora: " + livro.getEditora());
-            System.out.println("Gênero: " + livro.getGenero());
-            System.out.println("Ano de Publicação: " + livro.getAnoPublicacao());
+        ArrayList<Livro> lista = biblioteca.listarLivros();
+        if (lista.isEmpty()) {
+            System.out.println("\n");
+            System.out.println("Não há livros cadastrados.");
+        } else {
+            System.out.println("\n");
+            System.out.println("Lista de Livros:");
             System.out.println("\n");
 
-            System.out.println("---------------");
+            for (Livro livro : lista) {
+                System.out.println("Título: " + livro.getTitulo());
+                System.out.println("Autor: " + livro.getAutor());
+                System.out.println("Editora: " + livro.getEditora());
+                System.out.println("Gênero: " + livro.getGenero());
+                System.out.println("Ano de Publicação: " + livro.getAnoPublicacao());
+                System.out.println("\n");
+
+                System.out.println("---------------");
+            }
         }
     }
-}
-
 
 }

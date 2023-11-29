@@ -9,7 +9,7 @@ public class RegistroLivro {
     private int quantidadeLivros = 0;
 
     // Construtor para inicializar um registro com um livro e cliente
-    public RegistroLivro(Livro livro, Cliente cliente) {
+    public RegistroLivro(Cliente cliente, Livro livro) {
         this.livro = livro;
         this.cliente = cliente;
     }

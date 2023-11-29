@@ -4,9 +4,13 @@ import java.util.Scanner;
 
 public class Biblioteca {
     private ArrayList<Livro> acervo;
+    private ArrayList<Cliente> clientes;
+    private ArrayList<Livro> livros;
 
     public Biblioteca() {
         this.acervo = new ArrayList<>();
+        clientes = new ArrayList<>();
+        livros = new ArrayList<>();
     }
 
     public boolean insereLivro(String titulo, String autor, String categoria, String isbn, int anoPublicacao) {
@@ -57,33 +61,24 @@ public class Biblioteca {
         }
     }
 
-    public Livro consultaLivroISBN(String isbn) {
-        for (Livro livro : acervo) {
-            if (livro.getIsbn().equals(isbn)) {
+    public Cliente obterClientePorMatricula(String matricula) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getMatricula().equals(matricula)) {
+                return cliente;
+            }
+        }
+        return null; // Retorna null se o cliente não for encontrado
+    }
+
+    public Livro obterLivroPorCodigo(String isbn) {
+        for (Livro livro : livros) {
+            if (livro.getIsbn() == isbn) {
                 return livro;
             }
         }
         return null; // Retorna null se o livro não for encontrado
     }
 
-    public void atualizaLivroAutor(String isbn, String novoAutor) {
-        for (Livro livro : acervo) {
-            if (livro.getIsbn().equals(isbn)) {
-                livro.setAutor(novoAutor); // Atualiza o autor do livro
-                break; // Se o livro foi encontrado o loop para
-            }
-        }
-    }
-
-    public boolean removerLivro(String isbn) {
-        for (Livro livro : acervo) {
-            if (livro.getIsbn().equals(isbn)) {
-                acervo.remove(livro);
-                return true;
-            }
-        }
-        return false; // Livro não encontrado
-    }
 
     public ArrayList<Livro> listarLivros() {
         return acervo;
