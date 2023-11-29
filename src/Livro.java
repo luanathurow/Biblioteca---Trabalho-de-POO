@@ -10,6 +10,7 @@ public class Livro {
     private Scanner entradaUsuario;
     protected Biblioteca biblioteca;
     protected Genero genero;
+    protected boolean disponivel;
 
     /*public Livro(String isbn, String titulo, String autor, String editora, Date anoPublicacao, Genero genero) {
         this.isbn = isbn;
@@ -51,5 +52,9 @@ public class Livro {
 
     public void setGenero(Genero genero) {
         this.genero = genero;
+    }
+
+    public boolean setDisponivel() {
+        return this.disponivel = true;
     }
 }

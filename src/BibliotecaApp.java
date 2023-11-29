@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class BibliotecaApp {
     private Biblioteca biblioteca;
     private Scanner entradaUsuario;
+    CadastroCliente cliente;
 
     public BibliotecaApp() {
         biblioteca = new Biblioteca();
@@ -19,6 +20,7 @@ public class BibliotecaApp {
             System.out.println("3. Atualizar autor do livro");
             System.out.println("4. Remover livro");
             System.out.println("5. Listar livros");
+            System.out.println("5. Cadastrar cliente");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opcao: ");
             op = entradaUsuario.nextInt();
@@ -40,6 +42,8 @@ public class BibliotecaApp {
                 /*case 5:
                     listarLivros();
                     break;*/
+                case 6:
+                    cliente.cadastraCliente();
                 case 0:
                     System.out.println("Fim");
                     break;
