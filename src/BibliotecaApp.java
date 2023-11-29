@@ -35,7 +35,7 @@ public class BibliotecaApp {
                     cliente.cadastraCliente();
                     break; 
                 case 3:
-                    
+                //registra a retirada de livros de um cliente. Um cliente pode retirar no máximo 3 livros e o livro deve estar disponível na biblioteca. Essa funcionalidade calcula uma data de entrega.                    
                     break;
                 case 4:
                     
@@ -87,15 +87,21 @@ public class BibliotecaApp {
     private void listarLivros() {
     ArrayList<Livro> lista = biblioteca.listarLivros();
     if (lista.isEmpty()) {
+        System.out.println("\n");
         System.out.println("Não há livros cadastrados.");
     } else {
+        System.out.println("\n");
         System.out.println("Lista de Livros:");
+        System.out.println("\n");
+
         for (Livro livro : lista) {
             System.out.println("Título: " + livro.getTitulo());
             System.out.println("Autor: " + livro.getAutor());
             System.out.println("Editora: " + livro.getEditora());
             System.out.println("Gênero: " + livro.getGenero());
             System.out.println("Ano de Publicação: " + livro.getAnoPublicacao());
+            System.out.println("\n");
+
             System.out.println("---------------");
         }
     }

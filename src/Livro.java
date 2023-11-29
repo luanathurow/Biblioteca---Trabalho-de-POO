@@ -55,6 +55,10 @@ public class Livro {
         return disponivel;
     }
 
+    public void setDisponivel(boolean disponibilidade) {
+        this.disponivel = disponibilidade;
+    }
+
     public void setAutor(String novoAutor) {
         this.autor = novoAutor;
     }

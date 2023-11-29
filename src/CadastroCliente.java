@@ -6,7 +6,6 @@ public class CadastroCliente {
 
     private List<Cliente> clientes = new ArrayList<>();
     private Scanner entradaUsuario = new Scanner(System.in);
-    TipoCliente tipoCliente;
 
     public void cadastraCliente() {
         System.out.println("Nome: ");
@@ -21,15 +20,9 @@ public class CadastroCliente {
         System.out.println("Usuário: ");
         String tipoUsuario = entradaUsuario.next();
 
-        if (tipoUsuario == "Aluno"){
-            tipoCliente = TipoCliente.ALUNO;
-        } else if (tipoUsuario == "Professor"){
-            tipoCliente = TipoCliente.PROFESSOR;
-        } else {
-            tipoCliente = TipoCliente.OUTROS;
-        }
 
-        Cliente novoCliente = new Cliente(nome, matricula, telefone, tipoCliente);
+
+        Cliente novoCliente = new Cliente(nome, matricula, telefone);
         clientes.add(novoCliente);
         System.out.println("Cliente cadastrado com sucesso!");
     }

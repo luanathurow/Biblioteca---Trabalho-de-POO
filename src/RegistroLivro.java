@@ -1,61 +1,53 @@
 import java.util.Calendar;
 import java.util.Date;
 
-
-public class RegistroLivro<Livro> {
-
-    Cliente cliente;
-    Livro livro;
+public class RegistroLivro {
+    private Cliente cliente;
+    private Livro livro;
     private Calendar dataDevolucao = Calendar.getInstance();
     private Calendar dataEntrega = Calendar.getInstance();
-    int quantidadeLivros = 0;
-    boolean disponivel = true;
+    private int quantidadeLivros = 0;
 
-    public void registroDevolucao(Livro livro, Cliente cliente) {
+    // Construtor para inicializar um registro com um livro e cliente
+    public RegistroLivro(Livro livro, Cliente cliente) {
+        this.livro = livro;
+        this.cliente = cliente;
+    }
+
+    public void registrarRetiradaLivro() {
+        if (quantidadeLivros < 3 && livro.getDisponivel()) {
+            livro.setDisponivel(false); // Atualiza a disponibilidade do livro
+            quantidadeLivros++;
+            dataEntrega.setTime(new Date());
+            dataEntrega.add(Calendar.DAY_OF_MONTH, 15); // Prazo de 15 dias para a entrega
+            System.out.println("Livro retirado com sucesso!");
+            System.out.println("Data de entrega: " + dataEntrega.getTime());
+        } else {
+            System.out.println("Limite máximo de livros atingido para este cliente ou livro não disponível.");
+        }
+    }
+
+    public void registrarDevolucaoLivro() {
         int atraso = calculaDiasAtraso();
 
         if (atraso > 0) {
             System.out.println("O livro está com " + atraso + " dias de atraso, a devolução está registrada.");
-            livro.getDisponivel(true); // Atualiza a disponibilidade do livro
-
+            livro.setDisponivel(true); // Atualiza a disponibilidade do livro
         } else {
             System.out.println("Devolução registrada com sucesso.");
-            livro.getDisponivel(true); // Atualiza a disponibilidade do livro
-
+            livro.setDisponivel(true); // Atualiza a disponibilidade do livro
         }
 
+        // Limpa os dados após a devolução
+        quantidadeLivros = 0;
     }
-    //Método privado para calcular o número de dias de atraso na devolução
 
     private int calculaDiasAtraso() {
         if (dataEntrega.after(dataDevolucao)) {
-
-            dataEntrega.setTime(dataEntrega.getTime());
-            dataDevolucao.setTime(dataDevolucao.getTime());
-
             long diferenca = dataEntrega.getTimeInMillis() - dataDevolucao.getTimeInMillis();
-            int diasAtraso = (int) (diferenca / (1000 * 60 * 60 * 24));
-            return diasAtraso;
+            return (int) (diferenca / (1000 * 60 * 60 * 24));
         } else {
             return 0;
         }
     }
-
-    public Date calculaEntrega(){
-       int prazoEntrega = 20;
-        Calendar entrega = Calendar.getInstance();
-        entrega.setTime(dataEntrega.getTime());
-        entrega.add(Calendar.DAY_OF_MONTH, prazoEntrega);
-
-        return entrega.getTime();
-
-
-
-    }
-
-    public boolean limiteLivros(int quantidadeLivros){
-        return limiteLivros(5);
-    }
-
-
 }
