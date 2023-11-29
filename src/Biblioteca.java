@@ -2,89 +2,83 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-public class Biblioteca extends Livro {
+public class Biblioteca {
+    private ArrayList<Livro> acervo;
 
-    private Livro[] acervo;
-    private int qtdLivro;
-    private Scanner entradaUsuario;
-
-    Biblioteca() {
-        this.acervo = new Livro[100]; // Inicializa o array com a capacidade 100
-        this.qtdLivro = 0; // A quantidade de lirvros incia com 0
+    public Biblioteca() {
+        this.acervo = new ArrayList<>();
     }
 
-    public void cadastrarLivro() {
-        System.out.println("Digite o título do livro que deseja inserir: ");
-        String tituloLivro = entradaUsuario.nextLine();
+    public boolean insereLivro(String titulo, String autor, String categoria, String isbn, int anoPublicacao) {
+        Genero generoLivro = obterGeneroDoUsuario();
+        Livro novoLivro = new Livro(isbn, titulo, autor, categoria, new Date(anoPublicacao - 1900, 0, 1), generoLivro);
+        acervo.add(novoLivro);
+        return true;
+    }
 
-        System.out.println("Digite o autor do livro: ");
-        String autorLivro = entradaUsuario.nextLine();
+    private Genero obterGeneroDoUsuario() {
+        System.out.println("Escolha o gênero do livro:");
+        System.out.println("1. ROMANCE");
+        System.out.println("2. DARKROMANCE");
+        System.out.println("3. POESIA");
+        System.out.println("4. LGBTQIA");
+        System.out.println("5. FICCAO");
+        System.out.println("6. NAOFICCAO");
+        System.out.println("7. SUSPENSE");
+        System.out.println("8. ENEMIESTOLOVERS");
+        System.out.println("9. OUTROS");
 
-        System.out.println("Digite a categoria do livro: ");
-        String categoriaLivro = entradaUsuario.nextLine();
+        Scanner scanner = new Scanner(System.in);
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // Limpar o buffer
 
-        System.out.println("Digite o ISBN do livro: ");
-        String isbnLivro = entradaUsuario.nextLine();
-
-        System.out.println("Digite o ano de publicação do livro: ");
-        int anoPublicacaoLivro = entradaUsuario.nextInt();
-        entradaUsuario.nextLine();
-
-        // Criando o objeto Livro
-        Livro livroNovo = new Livro();
-
-        boolean testeLivroNovo = biblioteca.insereLivro(livroNovo);
-        // verificando se retorna null entra no if e apresenta os dados do livro
-        if (testeLivroNovo) {
-            System.out.println("Livro cadastrado em nossa biblioteca com sucesso!");
-            System.out.println("________ Resumo do cadastro __________");
-            System.out.println("Título: " + livroNovo.getTitulo());
-            System.out.println("Autor: " + livroNovo.getAutor());
-            System.out.println("Categoria: " + livroNovo.getGenero());
-            System.out.println("ISBN: " + livroNovo.getIsbn());
-            System.out.println("Ano de Publicacao: " + livroNovo.getAnoPublicacao());
-        } else {
-            System.out.println("Erro. Não foi possivel realizar o cadastro.");
-        }
-    } 
-
-    public boolean insereLivro(Livro livro) {
-        if (qtdLivro < 100) {
-            acervo[qtdLivro] = livro;
-            qtdLivro++;
-            return true;
-        } else {
-            return false;
+        switch (opcao) {
+            case 1:
+                return Genero.ROMANCE;
+            case 2:
+                return Genero.DARKROMANCE;
+            case 3:
+                return Genero.POESIA;
+            case 4:
+                return Genero.LGBTQIA;
+            case 5:
+                return Genero.FICCAO;
+            case 6:
+                return Genero.NAOFICCAO;
+            case 7:
+                return Genero.SUSPENSE;
+            case 8:
+                return Genero.ENEMIESTOLOVERS;
+            case 9:
+                return Genero.OUTROS;
+            default:
+                System.out.println("Opção inválida. Usando OUTROS por padrão.");
+                return Genero.OUTROS;
         }
     }
 
     public Livro consultaLivroISBN(String isbn) {
-        for (int i = 0; i < qtdLivro; i++) {
-            if (acervo[i].getIsbn().equals(isbn)) {
-                return acervo[i];
+        for (Livro livro : acervo) {
+            if (livro.getIsbn().equals(isbn)) {
+                return livro;
             }
         }
         return null; // Retorna null se o livro não for encontrado
     }
 
-    public void atualizaLivroAutor(String iSBN, String novoAutor) {
-        for (int i = 0; i < qtdLivro; i++) {
-            if (acervo[i].getIsbn().equals(iSBN)) {
-                acervo[i].setAutor(novoAutor); // Atualiza o autor do livro
+    public void atualizaLivroAutor(String isbn, String novoAutor) {
+        for (Livro livro : acervo) {
+            if (livro.getIsbn().equals(isbn)) {
+                livro.setAutor(novoAutor); // Atualiza o autor do livro
                 break; // Se o livro foi encontrado o loop para
             }
         }
     }
 
-    public boolean removeLivro(String iSBN, String novoAutor) {
-        for (int i = 0; i < qtdLivro; i++) {
-            if (acervo[i].getIsbn().equals(iSBN)) {
-                // Move os livros subsequentes para preencher o espaço
-                for (int j = i; j < qtdLivro - 1; j++) {
-                    acervo[j] = acervo[j + 1];
-                }
-                acervo[qtdLivro - 1] = null; // Define a última posição como nula
-                qtdLivro--;
+    public boolean removerLivro(String isbn) {
+        for (Livro livro : acervo) {
+            if (livro.getIsbn().equals(isbn)) {
+                acervo.remove(livro);
                 return true;
             }
         }
@@ -92,10 +86,6 @@ public class Biblioteca extends Livro {
     }
 
     public ArrayList<Livro> listaLivros() {
-        ArrayList<Livro> lista = new ArrayList<>();
-        for (int i = 0; i < qtdLivro; i++) {
-            lista.add(acervo[i]);
-        }
-        return lista;
+        return new ArrayList<>(acervo);
     }
 }

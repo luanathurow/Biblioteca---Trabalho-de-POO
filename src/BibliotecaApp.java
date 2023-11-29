@@ -1,26 +1,27 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BibliotecaApp {
     private Biblioteca biblioteca;
     private Scanner entradaUsuario;
-    CadastroCliente cliente;
+    private CadastroCliente cliente;
 
     public BibliotecaApp() {
         biblioteca = new Biblioteca();
         entradaUsuario = new Scanner(System.in);
+        cliente = new CadastroCliente(); 
     }
 
     public void executa() {
         int op;
         do {
+            try{
             System.out.println("\n\n\n------ MENU ------");
             System.out.println("1. Cadastrar livro");
             System.out.println("2. Consultar livro");
             System.out.println("3. Atualizar autor do livro");
             System.out.println("4. Remover livro");
             System.out.println("5. Listar livros");
-            System.out.println("5. Cadastrar cliente");
+            System.out.println("6. Cadastrar cliente");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opcao: ");
             op = entradaUsuario.nextInt();
@@ -39,11 +40,12 @@ public class BibliotecaApp {
                 case 4:
                     removerLivro();
                     break;
-                /*case 5:
-                    listarLivros();
-                    break;*/
+                case 5:
+                    //listarLivros(); 
+                    break;
                 case 6:
                     cliente.cadastraCliente();
+                    break; 
                 case 0:
                     System.out.println("Fim");
                     break;
@@ -51,11 +53,40 @@ public class BibliotecaApp {
                     System.out.println("Opcao inválida. Tente novamente.");
                     break;
             }
-        } while (op != 0);// opcao 0 quebra o while
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
+            entradaUsuario.nextLine(); 
+            op = -1;
+        }
+        } while (op != 0);
     }
 
     private void cadastrarLivro() {
+        System.out.println("Digite o título do livro que deseja inserir: ");
+        String tituloLivro = entradaUsuario.nextLine();
+
+        System.out.println("Digite o autor do livro: ");
+        String autorLivro = entradaUsuario.nextLine();
+
+        System.out.println("Digite a categoria do livro: ");
+        String categoriaLivro = entradaUsuario.nextLine();
+
+        System.out.println("Digite o ISBN do livro: ");
+        String isbnLivro = entradaUsuario.nextLine();
+
+        System.out.println("Digite o ano de publicação do livro: ");
+        int anoPublicacaoLivro = entradaUsuario.nextInt();
+        entradaUsuario.nextLine();
+
+        boolean testeLivroNovo = biblioteca.insereLivro(tituloLivro, autorLivro, categoriaLivro, isbnLivro, anoPublicacaoLivro);
+
+        if (testeLivroNovo) {
+            System.out.println("Livro cadastrado em nossa biblioteca com sucesso!");
+        } else {
+            System.out.println("Erro. Não foi possível realizar o cadastro.");
+        }
     }
+
 
     public void consultarLivro() {
         System.out.println("Digite o código ISBN para consultar o livro: ");
@@ -91,7 +122,7 @@ public class BibliotecaApp {
         System.out.println("Digite o nome do Autor para remover o livro: ");
         String autorRemover = entradaUsuario.nextLine();
 
-        boolean livroRemovido = biblioteca.removeLivro(ISBNRemover, autorRemover);
+        boolean livroRemovido = biblioteca.removerLivro(ISBNRemover);
         // se retornar null imprime o primeiro if
         if (livroRemovido) {
             System.out.println("Livro removido com sucesso!");

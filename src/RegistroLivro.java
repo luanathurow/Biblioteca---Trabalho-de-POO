@@ -16,11 +16,11 @@ public class RegistroLivro<Livro> {
 
         if (atraso > 0) {
             System.out.println("O livro está com " + atraso + " dias de atraso, a devolução está registrada.");
-            livro.setDisponivel(true); // Atualiza a disponibilidade do livro
+            livro.getDisponivel(true); // Atualiza a disponibilidade do livro
 
         } else {
             System.out.println("Devolução registrada com sucesso.");
-            livro.setDisponivel(true); // Atualiza a disponibilidade do livro
+            livro.getDisponivel(true); // Atualiza a disponibilidade do livro
 
         }
 

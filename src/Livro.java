@@ -1,5 +1,4 @@
 import java.util.Date;
-import java.util.Scanner;
 
 public class Livro {
     protected String isbn;
@@ -7,21 +6,18 @@ public class Livro {
     protected String autor;
     protected String editora;
     protected Date anoPublicacao;
-    private Scanner entradaUsuario;
     protected Biblioteca biblioteca;
     protected Genero genero;
     protected boolean disponivel;
 
-    /*public Livro(String isbn, String titulo, String autor, String editora, Date anoPublicacao, Genero genero) {
+    public Livro(String isbn, String titulo, String autor, String editora,Date anoPublicacao, Genero genero) {
         this.isbn = isbn;
         this.titulo = titulo;
         this.autor = autor;
         this.editora = editora;
         this.anoPublicacao = anoPublicacao;
         this.genero = genero;
-        entradaUsuario = new Scanner(System.in);
-        //biblioteca = new Biblioteca(100);
-    }*/
+    }
 
     public String getIsbn() {
         return isbn;
@@ -43,7 +39,8 @@ public class Livro {
         return anoPublicacao;
     }
 
-    public void setAutor(String novoAutor) {
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public Genero getGenero() {
@@ -54,7 +51,11 @@ public class Livro {
         this.genero = genero;
     }
 
-    public boolean setDisponivel() {
-        return this.disponivel = true;
+    public boolean getDisponivel() {
+        return disponivel;
+    }
+
+    public void setAutor(String novoAutor) {
+        this.autor = novoAutor;
     }
 }
