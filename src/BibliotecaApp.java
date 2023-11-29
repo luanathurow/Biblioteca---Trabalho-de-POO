@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BibliotecaApp {
@@ -16,12 +17,11 @@ public class BibliotecaApp {
         do {
             try{
             System.out.println("\n\n\n------ MENU ------");
-            System.out.println("1. Cadastrar livro");
-            System.out.println("2. Consultar livro");
-            System.out.println("3. Atualizar autor do livro");
-            System.out.println("4. Remover livro");
-            System.out.println("5. Listar livros");
-            System.out.println("6. Cadastrar cliente");
+            System.out.println("1. Cadastrar Livro");
+            System.out.println("2. Cadastrar Cliente");
+            System.out.println("3. Retirar Livro");
+            System.out.println("4. Devolver Livro");
+            System.out.println("5. Listar Livros");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opcao: ");
             op = entradaUsuario.nextInt();
@@ -32,19 +32,16 @@ public class BibliotecaApp {
                     cadastrarLivro();
                     break;
                 case 2:
-                    consultarLivro();
-                    break;
+                    cliente.cadastraCliente();
+                    break; 
                 case 3:
-                    atualizarAutorLivro();
+                    
                     break;
                 case 4:
-                    removerLivro();
+                    
                     break;
                 case 5:
-                    //listarLivros(); 
-                    break;
-                case 6:
-                    cliente.cadastraCliente();
+                    listarLivros(); 
                     break; 
                 case 0:
                     System.out.println("Fim");
@@ -87,48 +84,22 @@ public class BibliotecaApp {
         }
     }
 
-
-    public void consultarLivro() {
-        System.out.println("Digite o código ISBN para consultar o livro: ");
-        String ISBNConsultar = entradaUsuario.nextLine();
-
-        Livro livroEncontrado = biblioteca.consultaLivroISBN(ISBNConsultar);
-
-        if (livroEncontrado != null) {
-            System.out.println("Livro encontrado na nossa biblioteca:");
-            System.out.println("Título: " + livroEncontrado.getTitulo());
-            System.out.println("Autor: " + livroEncontrado.getAutor());
-            System.out.println("Editora: " + livroEncontrado.getEditora());
-            System.out.println("Genero: " + livroEncontrado.getGenero());
-            System.out.println("Ano de Publicação: " + livroEncontrado.getAnoPublicacao());
-        } else {
-            System.out.println("Livro não encontrado.");
+    private void listarLivros() {
+    ArrayList<Livro> lista = biblioteca.listarLivros();
+    if (lista.isEmpty()) {
+        System.out.println("Não há livros cadastrados.");
+    } else {
+        System.out.println("Lista de Livros:");
+        for (Livro livro : lista) {
+            System.out.println("Título: " + livro.getTitulo());
+            System.out.println("Autor: " + livro.getAutor());
+            System.out.println("Editora: " + livro.getEditora());
+            System.out.println("Gênero: " + livro.getGenero());
+            System.out.println("Ano de Publicação: " + livro.getAnoPublicacao());
+            System.out.println("---------------");
         }
     }
-    
-    public void atualizarAutorLivro() {
-        System.out.println("Digite o código ISBN do livro para alterar o Autor: ");
-        String ISBNAlterar = entradaUsuario.nextLine();
-        System.out.println("Digite o nome do Autor: ");
-        String autorAlterar = entradaUsuario.nextLine();
+}
 
-        biblioteca.atualizaLivroAutor(ISBNAlterar, autorAlterar);
-        System.out.println("Autor alterado com sucesso!");
-    }
-
-    public void removerLivro() {
-        System.out.println("Digite o código ISBN para remover o livro: ");
-        String ISBNRemover = entradaUsuario.nextLine();
-        System.out.println("Digite o nome do Autor para remover o livro: ");
-        String autorRemover = entradaUsuario.nextLine();
-
-        boolean livroRemovido = biblioteca.removerLivro(ISBNRemover);
-        // se retornar null imprime o primeiro if
-        if (livroRemovido) {
-            System.out.println("Livro removido com sucesso!");
-        } else {
-            System.out.println("Erro. Livro não removido ou não encontrado.");
-        }
-    }
 
 }

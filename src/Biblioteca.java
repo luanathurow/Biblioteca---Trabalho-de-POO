@@ -85,7 +85,8 @@ public class Biblioteca {
         return false; // Livro não encontrado
     }
 
-    public ArrayList<Livro> listaLivros() {
-        return new ArrayList<>(acervo);
-    }
+    public ArrayList<Livro> listarLivros() {
+        return acervo;
+    } 
+    
 }
