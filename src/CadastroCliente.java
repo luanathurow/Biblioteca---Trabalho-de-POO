@@ -7,23 +7,19 @@ public class CadastroCliente {
     private List<Cliente> clientes = new ArrayList<>();
     private Scanner entradaUsuario = new Scanner(System.in);
 
-    public void cadastraCliente() {
+    public Cliente cadastraCliente() {
         System.out.println("Nome: ");
-        String nome = entradaUsuario.next();
+        String nome = entradaUsuario.nextLine();
 
         System.out.println("Matrícula: ");
-        String matricula = entradaUsuario.next();
+        String matricula = entradaUsuario.nextLine();
 
         System.out.println("Telefone: ");
-        String telefone = entradaUsuario.next();
-
-        System.out.println("Usuário: ");
-        String tipoUsuario = entradaUsuario.next();
-
-
+        String telefone = entradaUsuario.nextLine();
 
         Cliente novoCliente = new Cliente(nome, matricula, telefone);
         clientes.add(novoCliente);
         System.out.println("Cliente cadastrado com sucesso!");
+        return novoCliente;
     }
 }

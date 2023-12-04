@@ -10,13 +10,14 @@ public class Livro {
     protected Genero genero;
     protected boolean disponivel;
 
-    public Livro(String isbn, String titulo, String autor, String editora,Date anoPublicacao, Genero genero) {
+    public Livro(String isbn, String titulo, String autor, String editora,Date anoPublicacao, Genero genero, boolean disponivel) {
         this.isbn = isbn;
         this.titulo = titulo;
         this.autor = autor;
         this.editora = editora;
         this.anoPublicacao = anoPublicacao;
         this.genero = genero;
+        disponivel = true;
     }
 
     public String getIsbn() {
@@ -52,7 +53,7 @@ public class Livro {
     }
 
     public boolean getDisponivel() {
-        return disponivel;
+        return disponivel=true;
     }
 
     public void setDisponivel(boolean disponibilidade) {

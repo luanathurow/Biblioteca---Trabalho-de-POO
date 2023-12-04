@@ -16,10 +16,10 @@ public class RegistroLivro {
 
     public void registrarRetiradaLivro() {
         if (quantidadeLivros < 3 && livro.getDisponivel()) {
-            livro.setDisponivel(false); // Atualiza a disponibilidade do livro
+            livro.setDisponivel(false); 
             quantidadeLivros++;
             dataEntrega.setTime(new Date());
-            dataEntrega.add(Calendar.DAY_OF_MONTH, 15); // Prazo de 15 dias para a entrega
+            dataEntrega.add(Calendar.DAY_OF_MONTH, 15);
             System.out.println("Livro retirado com sucesso!");
             System.out.println("Data de entrega: " + dataEntrega.getTime());
         } else {
